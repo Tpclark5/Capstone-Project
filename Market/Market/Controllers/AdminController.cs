@@ -11,23 +11,21 @@ namespace Market.Controllers
 {
     public class AdminController : Controller
     {
-        public class PursesController : Controller
-        {
-            private readonly IMarketRepository _PursesRepository;
+      private readonly IMarketRepository _PursesRepository;
 
-            public PursesController(IMarketRepository PursesRepository)
-            {
-                _PursesRepository = PursesRepository;
-            }
+      public AdminController(IMarketRepository PursesRepository)
+      {
+       _PursesRepository = PursesRepository;
+      }
 
-            [HttpPost]
+            [HttpGet]
             public async Task<IActionResult> Purses()
             {
                 var model = new PurseViewModel();
                 var PursesDBOList = await _PursesRepository.SelectAllPurses();
 
                 model.Purses = PursesDBOList
-                    .Select(PursesDBO => new PurseNameandID() { Brand = PursesDBO.Brand, ProductId = PursesDBO.ProductId })
+                    .Select(PursesDBO => new PurseNameandID() { PurseName = PursesDBO.PurseName, ProductId = PursesDBO.ProductId })
                     .ToList();
 
                 return View(model);
@@ -44,6 +42,7 @@ namespace Market.Controllers
             public IActionResult AddPurse(AddPurseViewModel postModel)
             {
                 var dboPurses = new PursesDBO();
+            dboPurses.PurseName = postModel.PurseName;
                 dboPurses.Brand = postModel.Brand;
                 dboPurses.Color = postModel.Color;
                 dboPurses.Price = postModel.Price;
@@ -54,19 +53,21 @@ namespace Market.Controllers
                 return RedirectToAction(nameof(Purses));
             }
 
-            public IActionResult DeleteSelectedPurse(int pursesId)
+            public IActionResult DeleteSelectedPurse(int productId)
             {
-                _PursesRepository.DeleteSelectedPurse(pursesId);
+                _PursesRepository.DeleteSelectedPurse(productId);
                 return RedirectToAction(nameof(Purses));
             }
 
             [HttpGet]
-            public async Task<IActionResult> UpdatePurse(int pursesID)
+            public async Task<IActionResult> UpdatePurse(int productId)
             {
                 var model = new UpdatePurseViewModel();
 
-                var currentPurse = await _PursesRepository.SelectOnePurse(pursesID);
+                var currentPurse = await _PursesRepository.SelectOnePurse(productId);
 
+                model.NewPurseName = string.Empty;
+                model.OldPurseName = currentPurse.PurseName;
 
                 model.NewBrand = string.Empty;
                 model.OldBrand = currentPurse.Brand;
@@ -80,7 +81,7 @@ namespace Market.Controllers
                 model.NewPrice = default(int);
                 model.OldPrice = currentPurse.Price;
 
-                model.ProductId = pursesID;
+                model.ProductId = productId;
 
                 return View(model);
             }
@@ -89,6 +90,7 @@ namespace Market.Controllers
             public IActionResult UpdatePurse(UpdatePurseViewModel model)
             {
                 var dboPurse = new PursesDBO();
+                dboPurse.PurseName = model.NewPurseName;
                 dboPurse.Brand = model.NewBrand;
                 dboPurse.Price = model.NewPrice;
                 dboPurse.Color = model.NewColor;
@@ -101,5 +103,5 @@ namespace Market.Controllers
             }
 
         }
-    }
+    
 }

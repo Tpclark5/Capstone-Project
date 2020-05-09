@@ -7,6 +7,7 @@ using Identity.Dapper.Entities;
 using Identity.Dapper.Models;
 using Identity.Dapper.SqlServer.Connections;
 using Identity.Dapper.SqlServer.Models;
+using Market.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,9 +39,14 @@ namespace Market
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionStringConfig = Configuration.GetSection("ConnectionStrings");
+            var connectionString = connectionStringConfig.GetChildren().First().Value;
+
+            services.Configure<DatabaseConfig>(x => x.ConnectionStrings = connectionString);
+
             services.ConfigureDapperConnectionProvider<SqlServerConnectionProvider>(
-                 Configuration.GetSection("ConnectionStrings")
-             ).ConfigureDapperIdentityCryptography(Configuration.GetSection("DapperIdentityCryptography"))
+                 connectionStringConfig)
+             .ConfigureDapperIdentityCryptography(Configuration.GetSection("DapperIdentityCryptography"))
               .ConfigureDapperIdentityOptions(new DapperIdentityOptions { UseTransactionalBehavior = false });
 
             services.AddIdentity<DapperIdentityUser, DapperIdentityRole>(identityOptions =>
@@ -53,6 +59,9 @@ namespace Market
             })
             .AddDapperIdentityFor<SqlServerConfiguration>()
             .AddDefaultTokenProviders();
+
+           
+            services.AddSingleton<IMarketRepository, MarketRepository>();
             services.AddControllersWithViews();
 
             services.Configure<CookiePolicyOptions>(options =>

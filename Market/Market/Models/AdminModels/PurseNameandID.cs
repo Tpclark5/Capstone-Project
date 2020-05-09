@@ -8,6 +8,6 @@ namespace Market.Models.AdminModels
     public class PurseNameandID
     {
         public int ProductId { get; set; }
-        public string Brand { get; set; }
+        public string PurseName { get; set; }
     }
 }

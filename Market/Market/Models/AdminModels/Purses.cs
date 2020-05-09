@@ -7,7 +7,7 @@ namespace Market.Models.AdminModels
 {
     public class Purses
     {
-     public string Brand { get; set; }
+     public string PurseName { get; set; }
 
     }
 }

@@ -1,7 +1,12 @@
 ﻿@model Market.Models.AdminModels.UpdatePurseViewModel
 
-<h1>Change the name of @Model.OldBrand</h1>
+<h1>Change the name of @Model.OldPurseName</h1>
 <form asp-action="UpdatedPurse" asp-controller="Admin">
+
+    <div>
+        <label asp-for="NewPurseName"></label>
+        <input asp-for="NewPurseName" />
+    </div>
 
     <div>
         <label asp-for="NewBrand"></label>

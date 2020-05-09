@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Market
+namespace cache_boy.Models
 {
-    public class DatabaseConfig
+    public class IndexViewModel
     {
-        public string ConnectionStrings { get; set; }
+        public string Message { get; set; }
     }
 }

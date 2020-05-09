@@ -7,11 +7,14 @@ namespace Market.Models.AdminModels
 {
     public class UpdatePurseViewModel
     {
+        public string OldPurseName { get; set; }
         public string OldBrand { get; set; }
         public string OldDescription { get; set; }
         public double OldPrice { get; set; }
         public string OldColor { get; set; }
 
+
+        public string NewPurseName { get; set; }
         public string NewBrand { get; set; }
 
         public string NewDescription { get; set; }

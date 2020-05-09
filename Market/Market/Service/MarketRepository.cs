@@ -16,7 +16,7 @@ namespace Market.Service
 
         public MarketRepository(IOptions<DatabaseConfig> config)
         {
-            _connectionString = config.Value.ConnectionString; 
+            _connectionString = config.Value.ConnectionStrings; 
         }
         
         public async Task<bool> DeleteSelectedPurse(int ProductId)
@@ -41,8 +41,8 @@ namespace Market.Service
 
         public async Task<bool> InsertPurses(PursesDBO model)
         {
-            var queryString = @$"INSERT INTO Purses (Brand, Color, Price, Description) 
-                                VALUES(@{nameof(PursesDBO.Brand)}, @{nameof(PursesDBO.Color)}, @{nameof(PursesDBO.Price)}, @{nameof(PursesDBO.Description)});";
+            var queryString = @$"INSERT INTO Purses (PurseName, Brand, Color, Price, Description) 
+                                VALUES(@{nameof(PursesDBO.PurseName)}, @{nameof(PursesDBO.Brand)}, @{nameof(PursesDBO.Color)}, @{nameof(PursesDBO.Price)}, @{nameof(PursesDBO.Description)});";
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -88,6 +88,7 @@ namespace Market.Service
         {
             var queryString = @$"UPDATE Purses
                                 SET 
+                                    PurseName = @PurseName
 	                                Brand = @Brand, 
 	                                Color =	@Color,
                                     Price = @Price,

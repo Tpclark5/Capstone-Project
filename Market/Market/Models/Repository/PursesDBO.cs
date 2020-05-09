@@ -8,6 +8,7 @@ namespace Market.Models.Repository
     public class PursesDBO
     {
         public int ProductId { get; set; }
+        public string PurseName { get; set; }
         public string Brand { get; set; }
         public string Color { get; set; }
         public double Price { get; set; }

@@ -9,16 +9,15 @@
     {
         <li class="list-group-item">
             <div>
-                <h4>@purse.Brand</h4>
+                <h4>@purse.PurseName</h4>
                 <a asp-action="DeletePurse"
                    asp-controller="Admin"
-                   asp-route-coffeeID="@purse.ProductId">
-                    <a href="C:\Users\tpcla\Desktop\Capstone Project\Market\Market\Views\Admin\Purses.cshtml">C:\Users\tpcla\Desktop\Capstone Project\Market\Market\Views\Admin\Purses.cshtml</a>
+                   asp-route-productId="@purse.ProductId">
                     Delete
                 </a>
                 <a asp-action="UpdatePurse"
                    asp-controller="Admin"
-                   asp-route-coffeeID="@purse.ProductId">
+                   asp-route-productID="@purse.ProductId">
                     Update
                 </a>
             </div>
