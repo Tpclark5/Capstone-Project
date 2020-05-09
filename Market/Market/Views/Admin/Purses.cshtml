@@ -1,0 +1,32 @@
+﻿@model Market.Models.AdminModels.PurseViewModel
+
+<div>
+    <h2>Browse Our Selection of Purses!</h2>
+</div>
+
+<ul>
+    @foreach (var purse in Model.Purses)
+    {
+        <li class="list-group-item">
+            <div>
+                <h4>@purse.Brand</h4>
+                <a asp-action="DeletePurse"
+                   asp-controller="Admin"
+                   asp-route-coffeeID="@purse.ProductId">
+                    <a href="C:\Users\tpcla\Desktop\Capstone Project\Market\Market\Views\Admin\Purses.cshtml">C:\Users\tpcla\Desktop\Capstone Project\Market\Market\Views\Admin\Purses.cshtml</a>
+                    Delete
+                </a>
+                <a asp-action="UpdatePurse"
+                   asp-controller="Admin"
+                   asp-route-coffeeID="@purse.ProductId">
+                    Update
+                </a>
+            </div>
+        </li>
+    }
+</ul>
+
+
+<button>
+    <a asp-action="AddPurse" asp-controller="Admin">Add Purse</a>
+</button>

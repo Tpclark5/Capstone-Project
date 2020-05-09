@@ -1,0 +1,32 @@
+﻿@model Market.Models.AdminModels.UpdatePurseViewModel
+
+<h1>Change the name of @Model.OldBrand</h1>
+<form asp-action="UpdatedPurse" asp-controller="Admin">
+
+    <div>
+        <label asp-for="NewBrand"></label>
+        <input asp-for="NewBrand" />
+    </div>
+
+    <div>
+        <label asp-for="NewDescription"></label>
+        <input asp-for="NewDescription" />
+    </div>
+
+    <div>
+        <label asp-for="NewColor"></label>
+        <input asp-for="NewColor" />
+    </div>
+
+    <div>
+        <label asp-for="NewPrice"></label>
+        <input asp-for="NewPrice" />
+    </div>
+
+
+
+    <input asp-for="ProductId" type="hidden" />
+
+    <button type="submit" class="btn btn-primary">Update Purse</button>
+
+</form>

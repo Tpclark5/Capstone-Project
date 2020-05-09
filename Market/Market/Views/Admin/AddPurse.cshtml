@@ -1,0 +1,21 @@
+﻿@model Market.Models.AdminModels.AddPurseViewModel
+
+<form asp-action="AddPurse" asp-controller="Admin">
+
+    <div>
+        <label asp-for="Brand"></label>
+        <input asp-for="Brand" />
+
+        <label asp-for="Color"></label>
+        <input asp-for="Color" />
+
+        <label asp-for="Price"></label>
+        <input asp-for="Price" />
+
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+
+        <input type="submit" value="Add Purse!" />
+    </div>
+
+</form>
