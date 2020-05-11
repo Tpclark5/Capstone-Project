@@ -1,0 +1,25 @@
+﻿@model Market.Models.UserModels.UserPurseViewModel
+
+<div>
+    <h2>Browse Our Selection of Purses!</h2>
+</div>
+
+<ul>
+    @foreach (var purse in Model.UserPurses)
+    {
+        <li class="list-group-item">
+            <div>
+                <h4>@purse.PurseName</h4>
+                <button>
+                    <a asp-action="UserAddToCart"
+                       asp-controller="User"
+                       asp-route-productId="@purse.ProductId">
+                        Add Purse to Shopping Cart
+                    </a>
+
+                </button>
+            </div>
+        </li>
+    }
+</ul>
+

@@ -14,5 +14,12 @@ namespace Market.Service
         Task<PursesDBO> SelectOnePurse(int ProductId);
         Task<bool> DeleteSelectedPurse(int ProductId);
 
+        Task<IEnumerable<CartDBO>> SelectAllCartItems();
+        Task<CartDBO> SelectOneCartItem(int ProductId);
+        Task<bool> DeleteSelectedCartItem(int ProductId);
+        Task<bool> InsertCartItem(CartDBO dboCart);
+
+        Task<IEnumerable<UserDBO>> DisplayAllPurses();
+        Task<UserDBO> UserSelectedPurse(int ProductId);
     }
 }

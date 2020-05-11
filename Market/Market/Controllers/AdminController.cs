@@ -42,7 +42,7 @@ namespace Market.Controllers
             public IActionResult AddPurse(AddPurseViewModel postModel)
             {
                 var dboPurses = new PursesDBO();
-            dboPurses.PurseName = postModel.PurseName;
+                dboPurses.PurseName = postModel.PurseName;
                 dboPurses.Brand = postModel.Brand;
                 dboPurses.Color = postModel.Color;
                 dboPurses.Price = postModel.Price;

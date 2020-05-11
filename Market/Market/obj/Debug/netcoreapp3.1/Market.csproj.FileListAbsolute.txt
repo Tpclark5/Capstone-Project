@@ -128,3 +128,7 @@ C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Ma
 C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Market.pdb
 C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Market.genruntimeconfig.cache
 C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Market.csprojAssemblyReference.cache
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\Cart\AddToCart.cshtml.g.cs
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\Cart\CartItems.cshtml.g.cs
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\User\UserPurses.cshtml.g.cs
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\User\UserAddToCart.cshtml.g.cs

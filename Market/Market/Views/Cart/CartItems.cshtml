@@ -1,0 +1,25 @@
+﻿@model Market.Models.CartModels.CartViewModel
+
+<div>
+    <h2>These Items Are In Your Cart</h2>
+</div>
+
+<ul>
+    @foreach (var cartItem in Model.CartItems)
+    {
+        <li class="list-group-item">
+            <div>
+                <h4>@cartItem.CartItemName</h4>
+                <a asp-action="DeleteCartItems"
+                   asp-controller="Cart"
+                   asp-route-productId="@cartItem.ProductId">
+                    Delete
+                </a>
+            </div>
+        </li>
+        <div>
+            <button type="submit" class="btn btn-primary">"Click here to begin checkout."</button>
+            
+        </div>
+    }
+</ul>

@@ -1,0 +1,20 @@
+﻿@model Market.Models.UserModels.UserAddToCartViewModel
+
+<form asp-action="CartItems" asp-controller="Cart">
+
+    <div>
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" />
+
+
+        <input asp-for="CartId" type="hidden" />
+        <input asp-for="CustomerID" type="hidden" />
+        <input asp-for="ProductID" type="hidden" />
+        <input asp-for="CartItemName" type="hidden" />
+        <input asp-for="Price" type="hidden" />
+
+        <button type="submit" class="btn btn-primary">"Add To Cart"</button>
+
+    </div>
+
+</form>

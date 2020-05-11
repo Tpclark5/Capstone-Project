@@ -18,7 +18,27 @@ namespace Market.Service
         {
             _connectionString = config.Value.ConnectionStrings; 
         }
-        
+
+        public async Task<bool> DeleteSelectedCartItem(int ProductId)
+        {
+            var query = @"DELETE FROM Cart WHERE ProductId = @ProductId;";
+
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var orderDetail = await connection.ExecuteAsync(query, new { ProductId });
+                    return true;
+                }
+                catch
+                {
+
+                    return false;
+                }
+            }
+        }
+
         public async Task<bool> DeleteSelectedPurse(int ProductId)
         {
             var query = @"DELETE FROM Purses WHERE ProductId = @ProductId;";
@@ -34,6 +54,37 @@ namespace Market.Service
                 catch
                 {
 
+                    return false;
+                }
+            }
+        }
+
+        public async Task<IEnumerable<UserDBO>> DisplayAllPurses()
+        {
+            const string queryString = "Select * from [dbo].Purses";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                IEnumerable<UserDBO> orderDetail = await connection.QueryAsync<UserDBO>(queryString);
+
+                return orderDetail;
+            }
+        }
+
+        public async Task<bool> InsertCartItem(CartDBO dboCart)
+        {
+            var queryString = @$"INSERT INTO Cart (PurseName, Brand, Color, Price, Description) 
+                                VALUES(@{nameof(CartDBO.PurseName)}, @{nameof(CartDBO.CustomerID)}, @{nameof(CartDBO.Quantity)}, @{nameof(CartDBO.Price)});";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var orderDetail = await connection.ExecuteAsync(queryString, dboCart);
+                    return true;
+                }
+                catch
+                {
                     return false;
                 }
             }
@@ -58,6 +109,11 @@ namespace Market.Service
             }
         }
 
+        public Task<IEnumerable<CartDBO>> SelectAllCartItems()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<PursesDBO>> SelectAllPurses()
         {
             const string queryString = "Select * from [dbo].Purses";
@@ -68,6 +124,11 @@ namespace Market.Service
 
                 return orderDetail;
             }
+        }
+
+        public Task<CartDBO> SelectOneCartItem(int ProductId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<PursesDBO> SelectOnePurse(int ProductId)
@@ -109,7 +170,17 @@ namespace Market.Service
             }
         }
 
-       
-        
+        public async Task<UserDBO> UserSelectedPurse(int ProductId)
+        {
+            var query = @"Select * From Purses
+                         WHERE ProductId = @ProductId";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var orderDetail = (await connection.QueryAsync<UserDBO>(query, new { ProductId })).FirstOrDefault();
+
+                return orderDetail;
+            }
+        }
     }
 }
