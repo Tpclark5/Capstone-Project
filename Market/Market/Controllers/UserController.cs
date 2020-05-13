@@ -32,13 +32,22 @@ namespace Market.Controllers
             var PursesDBOList = await _PursesRepository.DisplayAllPurses();
 
             model.UserPurses = PursesDBOList
-                .Select(PursesDBO => new UserPurseNameandID() { PurseName = PursesDBO.PurseName, ProductId = PursesDBO.ProductId })
+                .Select(PursesDBO => new UserPurseNameandID() { PurseName = PursesDBO.PurseName, ID = PursesDBO.ProductId, Description = PursesDBO.Description})
                 .ToList();
 
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpGet]
+        public IActionResult PurseDescription()
+        {
+            var model = new UserPurseNameandID();  
+            return View(model);
+        }
+
+      
+
         public IActionResult UserAddToCart()
         {
             var model = new UserAddToCartViewModel();
@@ -51,9 +60,9 @@ namespace Market.Controllers
             var dboCart = new CartDBO();
             dboCart.Quantity = postModel.Quantity;
             dboCart.CartId = postModel.CartId;
-            dboCart.CustomerID = postModel.CustomerID;
+            dboCart.ID = postModel.ID;
             dboCart.ProductID = postModel.ProductID;
-            dboCart.PurseName = postModel.CartItemName;
+            dboCart.PurseName = postModel.PurseName;
             dboCart.Price = postModel.Price;
 
             _CartRepository.InsertCartItem(dboCart);

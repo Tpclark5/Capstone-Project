@@ -12,14 +12,16 @@
                 <h4>@cartItem.CartItemName</h4>
                 <a asp-action="DeleteCartItems"
                    asp-controller="Cart"
-                   asp-route-productId="@cartItem.ProductId">
+                   asp-route-productID="@cartItem.ProductId">
                     Delete
                 </a>
             </div>
         </li>
-        <div>
-            <button type="submit" class="btn btn-primary">"Click here to begin checkout."</button>
-            
-        </div>
     }
 </ul>
+<div>
+    <button>
+        <a asp-action="ProceedToCheckout" asp-controller="Cart">Begin Checkout Process</a>
+    </button>
+
+</div>

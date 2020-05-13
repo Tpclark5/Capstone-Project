@@ -1,0 +1,65 @@
+﻿@model Market.Models.CartModels.ProceedToCheckoutViewModel
+
+<p>Your subtotal is @Model.subtotal</p>
+<p>Your total is @Model.grandtotal</p>
+
+<p>Please Enter Your Payment Details</p>
+
+@if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
+{
+    <h2> @Model.ErrorMessage</h2>
+}
+
+
+
+<form asp-action="FinalCheckout" asp-controller="Cart">
+
+    <div>
+        <label asp-for="firstname" class="control-label"></label>
+        <input asp-for="firstname" class="form-control" />
+        <span asp-validation-for="firstname" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="lastname" class="control-label"></label>
+        <input asp-for="lastname" class="form-control" />
+        <span asp-validation-for="firstname" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="address" class="control-label"></label>
+        <input asp-for="address" class="form-control" />
+        <span asp-validation-for="address" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="city" class="control-label"></label>
+        <input asp-for="city" class="form-control" />
+        <span asp-validation-for="city" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="zipcode" class="control-label"></label>
+        <input asp-for="zipcode" class="form-control" />
+        <span asp-validation-for="zipcode" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="cardnumber" class="control-label"></label>
+        <input asp-for="cardnumber" class="form-control" />
+        <span asp-validation-for="cardnumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="cvv" class="control-label"></label>
+        <input asp-for="cvv" class="form-control" />
+        <span asp-validation-for="cvv" class="text-danger"></span>
+    </div>
+    <div>
+        <input type="submit" value="Submit Payment Information" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

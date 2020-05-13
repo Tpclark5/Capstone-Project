@@ -71,16 +71,85 @@ namespace Market.Service
             }
         }
 
+        public async Task<bool> getgrandtotal(int grandtotal)
+        {
+            var query = @"select * from Customer a
+                            join Cart b on b.ID= a.ID
+                            Select ((Price * Quantity)*.06) As subtotal from [Cart];";
+
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var orderDetail = await connection.ExecuteAsync(query, new { grandtotal });
+                    return true;
+                }
+                catch
+                {
+
+                    return false;
+                }
+            }
+        }
+
+        public async Task<bool> getsubtotal(int subtotal)
+        {
+            var query = @"select * from Customer 
+                            join Cart  on Cart.ID = Customer.ID;
+                            Select (Price * Quantity) As subtotal from [Cart];";
+
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var orderDetail = await connection.ExecuteAsync(query, new { subtotal });
+                    return true;
+                }
+                catch
+                {
+
+                    return false;
+                }
+            }
+        }
+
         public async Task<bool> InsertCartItem(CartDBO dboCart)
         {
             var queryString = @$"INSERT INTO Cart (PurseName, Brand, Color, Price, Description) 
-                                VALUES(@{nameof(CartDBO.PurseName)}, @{nameof(CartDBO.CustomerID)}, @{nameof(CartDBO.Quantity)}, @{nameof(CartDBO.Price)});";
+                                VALUES(@{nameof(CartDBO.ProductID)},@{nameof(CartDBO.PurseName)}, @{nameof(CartDBO.ID)}, @{nameof(CartDBO.Quantity)}, @{nameof(CartDBO.Price)});";
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 try
                 {
                     var orderDetail = await connection.ExecuteAsync(queryString, dboCart);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public async Task<bool> InsertCustomer(CustomerDBO dboCustomer)
+        {
+            var queryString = @$"INSERT INTO Customer (firstname, lastname, Email, address, city, zipcode, cardnumber, expirationdate, cvv) 
+                                VALUES(@{nameof(CustomerDBO.ID)},@{nameof(CustomerDBO.firstname)}, @{nameof(CustomerDBO.lastname)}, @{nameof(CustomerDBO.Email)}, @{nameof(CustomerDBO.address)}, @{nameof(CustomerDBO.city)}, @{nameof(CustomerDBO.zipcode)}, @{nameof(CustomerDBO.cardnumber)}, @{nameof(CustomerDBO.expirationdate)}, @{nameof(CustomerDBO.cvv)} );
+                            select * from Customer a
+                            join Cart b on b.ID= a.ID
+                            Select ((Price * Quantity)*.06) As subtotal from [Cart];
+                            select * from Customer a
+                            join Cart b on b.ID= a.ID
+                            Select ((Price * Quantity)*.06) As subtotal from [Cart];";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var orderDetail = await connection.ExecuteAsync(queryString, dboCustomer);
                     return true;
                 }
                 catch
@@ -109,9 +178,16 @@ namespace Market.Service
             }
         }
 
-        public Task<IEnumerable<CartDBO>> SelectAllCartItems()
+        public async Task<IEnumerable<CartDBO>> SelectAllCartItems()
         {
-            throw new NotImplementedException();
+            const string queryString = "Select * from [dbo].Cart";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                IEnumerable<CartDBO> orderDetail = await connection.QueryAsync<CartDBO>(queryString);
+
+                return orderDetail;
+            }
         }
 
         public async Task<IEnumerable<PursesDBO>> SelectAllPurses()
@@ -126,9 +202,17 @@ namespace Market.Service
             }
         }
 
-        public Task<CartDBO> SelectOneCartItem(int ProductId)
+        public async Task<CartDBO> SelectOneCartItem(int ProductId)
         {
-            throw new NotImplementedException();
+            var query = @"Select * From Cart
+                         WHERE ProductId = @ProductId";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var orderDetail = (await connection.QueryAsync<CartDBO>(query, new { ProductId })).FirstOrDefault();
+
+                return orderDetail;
+            }
         }
 
         public async Task<PursesDBO> SelectOnePurse(int ProductId)
@@ -149,7 +233,7 @@ namespace Market.Service
         {
             var queryString = @$"UPDATE Purses
                                 SET 
-                                    PurseName = @PurseName
+                                    PurseName = @PurseName,
 	                                Brand = @Brand, 
 	                                Color =	@Color,
                                     Price = @Price,
@@ -163,8 +247,9 @@ namespace Market.Service
                     var orderDetail = await connection.ExecuteAsync(queryString, model);
                     return true;
                 }
-                catch
+                catch(Exception exception)
                 {
+                    var e = exception;
                     return false;
                 }
             }

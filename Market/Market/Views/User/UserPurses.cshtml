@@ -13,10 +13,16 @@
                 <button>
                     <a asp-action="UserAddToCart"
                        asp-controller="User"
-                       asp-route-productId="@purse.ProductId">
+                       asp-route-productId="@purse.ID">
                         Add Purse to Shopping Cart
                     </a>
-
+                </button>
+                 <button>
+                    <a asp-action="PurseDescription"
+                       asp-controller="User"
+                       asp-route-productId="@purse.ID">
+                        View Purse Description
+                    </a>
                 </button>
             </div>
         </li>

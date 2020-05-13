@@ -132,3 +132,6 @@ C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Ra
 C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\Cart\CartItems.cshtml.g.cs
 C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\User\UserPurses.cshtml.g.cs
 C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\User\UserAddToCart.cshtml.g.cs
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\User\PurseDescription.cshtml.g.cs
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\Cart\ProceedToCheckout.cshtml.g.cs
+C:\Users\tpcla\Desktop\Capstone Project\Market\Market\obj\Debug\netcoreapp3.1\Razor\Views\Cart\FinalCheckout.cshtml.g.cs

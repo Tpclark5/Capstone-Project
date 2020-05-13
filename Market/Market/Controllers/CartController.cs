@@ -5,61 +5,80 @@ using System.Threading.Tasks;
 using Market.Models.CartModels;
 using Market.Models.Repository;
 using Market.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IMarketRepository _CartRepository;
-       
+        private readonly IMarketRepository _CustomerRepository;
 
-        public CartController(IMarketRepository CartRepository)
+        public CartController(IMarketRepository CartRepository, IMarketRepository CustomerRepository)
         {
             _CartRepository = CartRepository;
+            _CustomerRepository = CustomerRepository;
         }
 
-            [HttpGet]
+            
             public async Task<IActionResult> CartItems()
             {
                 var model = new CartViewModel();
                 var CartDBOList = await _CartRepository.SelectAllCartItems();
 
                 model.CartItems = CartDBOList
-                    .Select(CartDBO => new CartItemNameAndId() { CartId = CartDBO.CartId, ProductId = CartDBO.ProductID, CustomerId = CartDBO.CustomerID, CartItemName = CartDBO.PurseName })
+                    .Select(CartDBO => new CartItemNameAndId() { ProductId = CartDBO.ID, CartItemName = CartDBO.PurseName })
                     .ToList();
 
                 return View(model);
             }
 
        
-        [HttpGet]
-            public IActionResult AddToCart()
-            {
-                var model = new AddToCartViewModel();
-                return View(model);
-            }
-
-            [HttpPost]
-            public IActionResult AddCartItem(AddToCartViewModel postModel)
-            {
-                var dboCart = new CartDBO();
-                dboCart.Quantity = postModel.Quantity;
-                dboCart.CartId = postModel.CartId;
-                dboCart.CustomerID = postModel.CustomerID;
-                dboCart.ProductID = postModel.ProductID;
-                dboCart.PurseName = postModel.CartItemName;
-                dboCart.Price = postModel.Price;
-
-                _CartRepository.InsertCartItem(dboCart);
-
-                return RedirectToAction(nameof(CartItems));
-            }
-
+       [HttpPost]
             public IActionResult DeleteSelectedCartItem(int productId)
             {
                 _CartRepository.DeleteSelectedCartItem(productId);
                 return RedirectToAction(nameof(CartItems));
             }
+
+
+        [HttpGet]
+        public IActionResult ProceedToCheckout()
+        {
+            var model = new ProceedToCheckoutViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProceedToCheckout(ProceedToCheckoutViewModel postModel)
+        {
+            var dboCustomer = new CustomerDBO();
+            dboCustomer.ID = postModel.ID;
+            dboCustomer.firstname = postModel.firstname;
+            dboCustomer.lastname = postModel.lastname;
+            dboCustomer.Email = postModel.Email;
+            dboCustomer.address = postModel.address;
+            dboCustomer.city = postModel.city;
+            dboCustomer.zipcode = postModel.zipcode;
+            dboCustomer.cardnumber = postModel.cardnumber;
+            dboCustomer.expirationdate = postModel.expirationdate;
+            dboCustomer.cvv = postModel.cvv;
+            dboCustomer.subtotal = postModel.subtotal;
+            dboCustomer.grandtotal = postModel.grandtotal;
+
+
+            _CustomerRepository.InsertCustomer(dboCustomer);
+
+            return RedirectToAction(nameof(CartController.CartItems));
+        }
+        
+     
+        [HttpPost]
+        public IActionResult FinalCheckout()
+        {
+            return View();
+        }
     }
 }

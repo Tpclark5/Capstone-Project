@@ -7,7 +7,9 @@ namespace Market.Models.UserModels
 {
     public class UserPurseNameandID
     {
-        public int ProductId { get; set; }
+        public int ID { get; set; }
         public string PurseName { get; set; }
+
+        public string Description { get; set; }
     }
 }

@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Market.Models.AdminModels;
 using Market.Models.Repository;
 using Market.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
+
       private readonly IMarketRepository _PursesRepository;
 
       public AdminController(IMarketRepository PursesRepository)
@@ -19,6 +22,7 @@ namespace Market.Controllers
       }
 
             [HttpGet]
+            [AllowAnonymous]
             public async Task<IActionResult> Purses()
             {
                 var model = new PurseViewModel();
@@ -52,7 +56,7 @@ namespace Market.Controllers
 
                 return RedirectToAction(nameof(Purses));
             }
-
+            [HttpGet]
             public IActionResult DeleteSelectedPurse(int productId)
             {
                 _PursesRepository.DeleteSelectedPurse(productId);

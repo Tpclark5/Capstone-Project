@@ -21,5 +21,12 @@ namespace Market.Service
 
         Task<IEnumerable<UserDBO>> DisplayAllPurses();
         Task<UserDBO> UserSelectedPurse(int ProductId);
+
+        Task<bool> InsertCustomer(CustomerDBO dboCustomer);
+
+        Task<bool> getsubtotal(int subtotal);
+        Task<bool> getgrandtotal(int grandtotal);
+
+
     }
 }
